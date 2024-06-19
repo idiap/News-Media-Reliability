@@ -1,0 +1,7 @@
+CC-NEWS/*
+data/*
+!data/golden_truth/
+*.bin
+__pycache__
+logs/
+core

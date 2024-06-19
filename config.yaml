@@ -1,0 +1,99 @@
+snapshot:
+  paths_url: "https://data.commoncrawl.org/crawl-data/CC-NEWS/ALL/08/warc.paths.gz"  # url to file with paths to WARC files
+  url_split: "crawl-data/"  # string used to split CC-news urls into domain and local path
+
+extract:
+  lang_filter: ["en", "es"]
+  index: False
+  news_sources: True  # the only one needed for graph creating
+  metadata: False
+  wet: False # wheather or not to also generate WET files from the downloaded WARC files
+  ccnet_json: False
+  remove_originals: True  # whether or not to remove original warc files after they were processed
+
+index:
+  passage:
+    use_sentence_boundaries: True 
+    max_token_length: 100  # max. number of tokens of each passage to index
+  remove_originals: True  # whether or not to remove original jsonl files after they were indexed
+
+golden_truth:
+  output_path: "data/golden_truth/"
+  output_file: "golden_truth_dataset.csv"
+  include_mixed_in_reward: False
+  manual:
+    reliable_sources_path: "data/golden_truth/reliable_news_sources.txt"
+    unreliable_sources_path: "data/golden_truth/unreliable_news_sources.txt"
+  automatic:
+    rebuild: False
+    wikipedia:
+      perennial_sources:
+        url: "https://en.wikipedia.org/wiki/Wikipedia:Reliable_sources/Perennial_sources"
+        output_file: "wikipedia_perennial_sources/wikipedia_perennial_sources.json"
+    nela_gt:
+      input_file: "nela-gt/labels_nela_gt+domain(2018).csv"
+      output_newsguard_file: "nela-gt/newsguard.csv"
+    blocklists:
+      path: "blocklists/"
+      intput_files: ["easylist-justdomains.txt", "easyprivacy-justdomains.txt", "adguarddns-justdomains.txt", "nocoin-justdomains.txt"]
+      output_file: "blocked_domains.txt"
+    mbfc:
+      path: "mbfc/mbfc.csv"
+
+clean_cache: False
+
+graph:
+  lang: "en"
+  evaluation: True
+  join_graphs: True  # wheather or not to create a single graph joining all available graphs (across years and months)
+  target_graph: ['news']  # valid values are 'news' or 'all' (if news only keep news media nodes in the graph)
+  news_sources:
+    ignore: ["google.com", "youtube.com", "twitter.com", "facebook.com", "reddit.com", "amazon.com"]
+    filter:
+      targets: []  # analyze only the subset of news given here
+      # targets: ["newrepublic.com"]  # analyze only the subset of news given here
+      include_neighbors: True
+  visualization:
+    enable: True
+    graph:
+      edge:
+        min_fr: 50  # in case of using filter, it's better to set it to a small value like 1
+        max_width: 10
+        min_width: 4
+      node:
+        min_size: 10
+        max_size: 100
+    color:
+      reliable: "#1e88e5"
+      unreliable: "#e53935"
+      unknown: "#bdbdbd"
+
+# --- output folders ---
+output:
+  metadata_folder: "metadata"
+  news_sources_folder: "news_sources"
+  graph_folder: "graph"
+  wet_folder: "wet"
+  ccnet_folder: "ccnet"
+  index_folder: "indexes"
+
+# --- pre-trained language identification model ---
+lang_id:
+  download_path: "data"
+  fasttext_model_url: "https://dl.fbaipublicfiles.com/fasttext/supervised-models/lid.176.bin"
+
+# --- parallelism (jobs) ---
+job:
+  id: 0
+  max: 1
+
+# --- hydra (disabling output logs) ---
+defaults:  
+  - _self_  
+  - override hydra/hydra_logging: disabled  
+  - override hydra/job_logging: disabled  
+
+hydra:  
+  output_subdir: null  
+  run:  
+    dir: .
