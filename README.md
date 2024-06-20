@@ -33,7 +33,7 @@ We recommend using either `"p-reliability"` or `"p+fp-average"`, if you can eval
 
 ### :books: Ground Truth Dataset
 
-The CSV file with the ground truth dataset described in the paper is located in [`data/golden_truth/golden_truth_dataset.csv`](data/golden_truth/golden_truth_dataset.csv). The CSV file has the following 4 columns:
+The CSV file with the ground truth dataset described in the paper is located in [`data/golden_truth/golden_truth_dataset.csv`](data/golden_truth/golden_truth_dataset.csv). The CSV file contains for each news media url domain, its reliability label, the sources used to obtain the label, and its  NewsGuard score when it is available. The CSV structure is as shown in the following example with 6 rows:
 
 |domain|reliability_label|newsguard_score|label_source|
 | --- | --- | --- | --- |
