@@ -33,7 +33,16 @@ We recommend using either `"p-reliability"` or `"p+fp-average"`, if you can eval
 
 ### :books: Ground Truth Dataset
 
-The CSV file with the ground truth dataset described in the paper is located in [`data/golden_truth/golden_truth_dataset.csv`](data/golden_truth/golden_truth_dataset.csv)
+The CSV file with the ground truth dataset described in the paper is located in [`data/golden_truth/golden_truth_dataset.csv`](data/golden_truth/golden_truth_dataset.csv). The CSV file has the following 4 columns:
+
+|domain|reliability_label|newsguard_score|label_source|
+| --- | --- | --- | --- |
+|9news.com|1||mbfc|
+|nbc11news.com|1||mbfc|
+|24ur.com|0||mbfc|
+|ft.com|1|100.0|newsguard|
+|adfontesmedia.com|-1||wikipedia|
+|foreignpolicy.com|1|87.5|newsguard|
 
 We also provide the script `build_dataset.py` to build a potentially more updated version of this dataset which will take care of scraping the whole mediabiasfactcheck.com web site as of today to gather their current annotations, normalize them, and merge them with the other sources reported in the paper to generate a new version of this csv dataset.
 
