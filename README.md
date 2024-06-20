@@ -6,7 +6,7 @@ This repo contains all the needed files to download and process CC-News snapshot
 ---
 ### 😎 Computed Reliability Scores
 
-JSON file with the estimated reliability degrees reported in the paper can be found in `CC-NEWS/ALL/04/reliability_scores.json`. This JSON files contain the list of URL domains and estimated scores (from -1 to 1) with each method. For instance, in Python we can simply use as:
+JSON file with the estimated reliability degrees reported in the paper can be found in [`CC-NEWS/ALL/08/graph/en/reliability_scores.json`](CC-NEWS/ALL/08/graph/en/reliability_scores.json). This JSON files contain the list of URL domains and estimated scores (from -1 to 1) with each method. For instance, in Python we can simply use as:
 
 ```python
 import json
@@ -33,7 +33,7 @@ We recommend using either `"p-reliability"` or `"p+fp-average"`, if you can eval
 
 ### :books: Ground Truth Dataset
 
-The CSV file with the ground truth dataset described in the paper is located in `data/golden_truth/golden_truth_dataset.csv`
+The CSV file with the ground truth dataset described in the paper is located in [`data/golden_truth/golden_truth_dataset.csv`](data/golden_truth/golden_truth_dataset.csv)
 
 We also provide the script `build_dataset.py` to build a potentially more updated version of this dataset which will take care of scraping the whole mediabiasfactcheck.com web site as of today to gather their current annotations, normalize them, and merge them with the other sources reported in the paper to generate a new version of this csv dataset.
 
