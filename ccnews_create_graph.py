@@ -99,10 +99,8 @@ def norm_neg_pos_vec(V):
 
 
 def save_indexes(mapping:dict, only_news:bool, output_path:str) -> None:
-    from tools.util import GzippingWrapper
-
-    output_file = os.path.join(output_path, f"domain_ix_{'news' if only_news else 'all'}.gz")
-    output_file = GzippingWrapper(open(output_file, "wb"))
+    output_file = os.path.join(output_path, f"domain_ix_{'news' if only_news else 'all'}.tsv")
+    output_file = open(output_file, "wb")
     for domain in mapping:
         output_file.write(f"{domain}\t{mapping[domain]}\n".encode('utf-8'))
     output_file.close()
@@ -182,7 +180,7 @@ def create_and_save_graph(cfg:DictConfig, domain2ix:dict, graph_type:str,
     G.remove_edges_from(edges_to_remove)
     G.remove_nodes_from(list(nx.isolates(G)))
 
-    # nx.write_gpickle(G, os.path.join(output_path, f"graph_{graph_type}.pkl"))
+    nx.write_graphml(G, os.path.join(output_path, f"graph_{graph_type}.graphml"))
 
     print(f"Graph created ({len(G.nodes)} nodes, {len(G.edges)} edges)")
 
@@ -458,7 +456,7 @@ def create_and_save_graph(cfg:DictConfig, domain2ix:dict, graph_type:str,
 
         # nt.toggle_disable_physics_onload(True)  # https://github.com/WestHealth/pyvis/pull/179
         # nt.show(html_path)
-        nt.write_html(html_path)
+        # nt.write_html(html_path)
         html = nt.generate_html()
         onload_str = "// really clean the dom element"
         onload_ix = html.find(onload_str)
@@ -473,8 +471,8 @@ def create_and_save_graph(cfg:DictConfig, domain2ix:dict, graph_type:str,
                html[onload_ix:]
         with open(html_path, "w+") as out:
             out.write(html)
-        os.system(f"rm -f -r {output_path}/lib")
-        os.system(f"mv lib {output_path}")
+        # os.system(f"rm -f -r {output_path}/lib")
+        # os.system(f"mv lib {output_path}")
 
     return G
 

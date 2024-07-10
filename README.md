@@ -67,14 +67,38 @@ Next, download the already processed CC-News files needed to construct the graph
 ```
 
 Everything ready! Now you can simply use the script to construct and evaluate the graph:
-  - ExpsetB:
-    ```bash
-    python ccnews_create_graph.py golden_truth.include_mixed_in_reward=True
-    ```
   - ExpsetB$^-$ (default parameters):
     ```bash
     python ccnews_create_graph.py
     ```
+  - ExpsetB:
+    ```bash
+    python ccnews_create_graph.py golden_truth.include_mixed_in_reward=True
+    ```
+
+### :zap: Subgraph Visualization for a Given Domain
+
+To visualize the subgraph containing only the sources linked to a given domain you can use the `generate_subgraph.py` script. For instance, to visualize the subgraph for [wordpress.com](wordpress.com) we can simply use:
+
+```bash
+generate_subgraph.py wordpress.com
+```
+This by default will create the file `subgraph-DOMAIN.html` (`subgraph-wordpress.com.html` in this case) inside the folder `CC-NEWS/ALL/08/graph/en/`. In this case this subgraph look like the following:
+
+![](CC-NEWS/ALL/08/graph/en/wordpress_subgraph.png)
+
+For instance, here we can see that most media sources linking to [wordpress.com](wordpress.com) are unreliable. Red color correspond to unreliable sources, green to reliable, and gray to middle values. Additionally, node size correspond to the computed degree and edges width to the strength of the connection between the sources given by hyperlink volume.
+
+Inside the `generate_subgraph.py` there are few parameters hard coded that can be changed, like showing only inbound links (default), outbound or both. Or changing the path to the desired graph to extract the subgraph.
+
+> **NOTE:** the `generate_subgraph.py` script need to get access to the original graph file (the `graph_news.graphml` file) which is not included in this repo because it exceeds GitHub's file size limit of 100.00 MB, you will need to generate it first, before calling the script for the first time. To generate the needed file simply use: 
+> 
+> ```bash
+> python ccnews_create_graph.py graph.evaluation=False graph.visualization.enable=False
+> ```
+> 
+> The `graph_news.graphml` file should be now inside the `CC-NEWS/ALL/08/graph/en/` folder.
+
 
 ---
 ## :earth_americas: Want to create your own and larger 💪 Graph from CC-News?
@@ -160,7 +184,7 @@ In addition, except for `wet`, these folders will be split and grouped by langua
 
 Finally, in the `config.yaml`, using the `graph.lang` parameter one can specify the target language to construct the graphs on the generated data.
 
-The "graph" folder will contain the graph saved as a graphml file (`graph_news.graphml`), the list of all news domains and index pairs (`domain_ix_news.gz`), the HTML file (`graph_news.html`) with an interactive visualization of the graph, and last but not least, the `reliability_scores.json` files containing the computed values for all the news media domains in the graph.
+The "graph" folder will contain the graph saved as a graphml file (`graph_news.graphml`), the list of all news domains and node index pairs as a TSV file (`domain_ix_news.tsv`), the HTML file (`graph_news.html`) with an interactive visualization of the graph, and last but not least, the `reliability_scores.json` files containing the computed values for all the news media domains in the graph.
 
 ### :electric_plug: Configuration file
 
