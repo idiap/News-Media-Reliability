@@ -65,7 +65,8 @@ def load_global_graph(path_graph, path_index, path_reliability_scores):
             d["color"] = color_interpolation_neg_edge(-reliability).to_string(hex=True)
     for id in G.nodes:
         node = G.nodes[id]
-        node["label"] = node2domain[id]
+        domain = node2domain[id]
+        node["label"] = domain
         node["reliability"] = news_sources_info[node2domain[id]][reliability_method]
         node["size"] = node_min_size + int(abs(node["reliability"]) * node_max_size)
         if node["reliability"] >= 0:
@@ -76,6 +77,15 @@ def load_global_graph(path_graph, path_index, path_reliability_scores):
                       "color": "black",
                       "strokeColor": "black",
                       "strokeWidth": 0}
+        reliability_type = "-"
+        if node["reliability"] != 0:
+            reliability_type = "Reliable" if node["reliability"] >= 0 else "Unreliable"
+        node["title"] = f"""
+        <p>
+            <b>URL:</b> <a href="http://{domain}" target="_blank">{domain}</a><br>
+            <b>Reliability score:</b> {reliability_type} (<span style="color:{node["color"]}">{node["reliability"]:.2%}</span>)<br>
+        </p>
+        """
 
 
 def get_subgraph_html(target_node, graph_type_edges="in", graph_max_edges=150):
@@ -89,6 +99,7 @@ def get_subgraph_html(target_node, graph_type_edges="in", graph_max_edges=150):
 
     target_node = domain2node[target_node]
     G_sub = nx.DiGraph()
+    G_sub.add_node(target_node)
     if graph_type_edges != "out":
         G_sub.add_edges_from(G.in_edges(target_node, data=True))
     if graph_type_edges != "in":
@@ -99,15 +110,16 @@ def get_subgraph_html(target_node, graph_type_edges="in", graph_max_edges=150):
     if len(G_sub.edges) > graph_max_edges:
         if len(G_sub.edges) > graph_max_edges:
             remove_edges = [(a, b)
-                    for a, b, _
-                    in  sorted([(a, b, w) for a, b, w in G_sub.edges(data="weight")],
-                                key=lambda abw: -abw[-1])[graph_max_edges:]]
+                            for a, b, _
+                            in  sorted([(a, b, w) for a, b, w in G_sub.edges(data="weight")],
+                                        key=lambda abw: -abw[-1])[graph_max_edges:]]
         G_sub.remove_edges_from(remove_edges)
         G_sub.remove_nodes_from(list(nx.isolates(G_sub)))
 
     nt = Network(height="750px", width="100%", directed=True)
     nt.from_nx(G_sub)
     nt.barnes_hut()
+    nt.options.interaction.__dict__["tooltipDelay"] = 250
 
     # nt.write_html(path_html_out)
     html = nt.generate_html()
@@ -118,14 +130,11 @@ def get_subgraph_html(target_node, graph_type_edges="in", graph_max_edges=150):
         onload_ix = html.find(onload_str)
     # forcing full screen mode and disabling physics onload
     html = html[:onload_ix] + \
-            "document.getElementById('mynetwork').style.height = '100%';" + \
-            "network.setOptions({height: window.innerHeight + 'px'});" + \
-            html[onload_ix:]
-    # html = html[:onload_ix] + \
-    #         "document.getElementById('mynetwork').style.height = '100%';" + \
-    #         "network.setOptions({height: window.innerHeight + 'px'});" + \
-    #         "network.setOptions({physics : false});\n" + \
-            # html[onload_ix:]
+           "document.getElementById('mynetwork').style.height = '100%';" + \
+           "network.setOptions({height: window.innerHeight + 'px'});" + \
+           html[onload_ix:]
+           # "network.on('doubleClick', function (params) {let target = nodes.get(params.nodes[0]).label;if (target)window.location.href = target;});" + \
+    G_sub.nodes[target_node]["font"]["strokeWidth"] = 0
     return html
 
 if __name__ == "__main__":
