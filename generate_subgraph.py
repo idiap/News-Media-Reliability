@@ -80,7 +80,12 @@ def load_global_graph(path_graph, path_index, path_reliability_scores):
 
 def get_subgraph_html(target_node, graph_type_edges="in", graph_max_edges=150):
     if target_node not in domain2node:
-        return ""
+        if not target_node.startswith("www.") and "www." + target_node in domain2node:
+            target_node = "www." + target_node
+        elif target_node.startswith("www.") and target_node[4:] in domain2node: 
+            target_node = target_node[4:]
+        else:
+            return ""
 
     target_node = domain2node[target_node]
     G_sub = nx.DiGraph()

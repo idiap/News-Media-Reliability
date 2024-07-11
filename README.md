@@ -83,7 +83,7 @@ To visualize the subgraph containing only the sources linked to a given domain y
 ```bash
 generate_subgraph.py wordpress.com
 ```
-This by default will create the file `subgraph-DOMAIN.html` (`subgraph-wordpress.com.html` in this case) inside the folder `CC-NEWS/ALL/08/graph/en/`. In this case this subgraph look like the following:
+This by default will create the file `subgraph-DOMAIN.html` (`subgraph-wordpress.com.html` in this case) inside the folder `CC-NEWS/ALL/08/graph/en/` containing the interactive plot. In this case this subgraph look like the following:
 
 ![](CC-NEWS/ALL/08/graph/en/wordpress_subgraph.png)
 
