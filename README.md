@@ -1,5 +1,7 @@
 # :newspaper: Reliability Estimation of News Media Sources: *"Birds of a Feather Flock Together"* :bird:
 
+:sushi: **Graph live demo [here](https://lab.idiap.ch/criteria/source_subgraph/wordpress.com)** _(double click on a node to navigate the graph)_
+
 This repo contains all the needed files to download and process CC-News snapshot, extract different content from it (e.g. metadata, WET and CCNet-like json files), construct news sources graph, and estimate the reliability degrees using the four strategies described in [our NAACL paper](https://aclanthology.org/2024.naacl-long.383/).
 
 
@@ -83,7 +85,7 @@ To visualize the subgraph containing only the sources linked to a given domain y
 ```bash
 generate_subgraph.py wordpress.com
 ```
-This by default will create the file `subgraph-DOMAIN.html` (`subgraph-wordpress.com.html` in this case) inside the folder `CC-NEWS/ALL/08/graph/en/` containing the interactive plot. In this case this subgraph look like the following:
+This by default will create the file `subgraph-DOMAIN.html` (`subgraph-wordpress.com.html` in this case) inside the folder `CC-NEWS/ALL/08/graph/en/` containing the interactive plot. In this case this subgraph look like the following (live demo [here](https://lab.idiap.ch/criteria/source_subgraph/wordpress.com) - double click on nodes to keep navigating the graph):
 
 ![](CC-NEWS/ALL/08/graph/en/wordpress_subgraph.png)
 
