@@ -1,8 +1,12 @@
 # :newspaper: Reliability Estimation of News Media Sources: *"Birds of a Feather Flock Together"* :bird:
 
-:sushi: **Graph live demo [here](https://lab.idiap.ch/criteria/source_subgraph/wordpress.com)** _(double click on a node to navigate the graph)_
+> * :rice_ball: **Live demo example** -> [here](https://lab.idiap.ch/criteria/) \
+> _(searched content will be order by estimated source reliability; if a news URL is provided, result is the news outlet estimated profile)_
+> * :sushi: **News graph live demo** -> [here](https://lab.idiap.ch/criteria/source_subgraph/wordpress.com) \
+> _(double click on a node to navigate the graph)_
 
-This repo contains all the needed files to download and process CC-News snapshot, extract different content from it (e.g. metadata, WET and CCNet-like json files), construct news sources graph, and estimate the reliability degrees using the four strategies described in [our NAACL paper](https://aclanthology.org/2024.naacl-long.383/).
+
+This repo contains all the needed files to download and process CC-News snapshot, extract different content from it (e.g. metadata, WET and CCNet-like json files), construct news sources graph, replicate the experimentation and estimate the reliability degrees using the four strategies described in [our NAACL paper](https://aclanthology.org/2024.naacl-long.383/).
 
 
 ---
@@ -31,7 +35,7 @@ we should get something like:
 }
 ```
 
-We recommend using either `"p-reliability"` or `"p+fp-average"`, if you can evaluate them in downstream tasks, use the values to decide which one.
+We recommend using either `"p-reliability"` or `"p+fp-average"`, if you can evaluate them in downstream tasks, use the method that performs the best on it.
 
 ### :books: Ground Truth Dataset
 
