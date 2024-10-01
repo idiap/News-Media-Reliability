@@ -294,4 +294,12 @@ Note, here the flags `-o` and `-j` are being used to redirect the output to the 
     pages = "6893--6911",
 }
 
+@inproceedings{sanchez2024mapping,
+  title={Mapping the media landscape: predicting factual reporting and political bias through web interactions},
+  author={S{\'a}nchez-Cort{\'e}s, Dairazalia and Burdisso, Sergio and Villatoro-Tello, Esa{\'u} and Motlicek, Petr},
+  booktitle={International Conference of the Cross-Language Evaluation Forum for European Languages},
+  pages={127--138},
+  year={2024},
+  organization={Springer}
+}
 ```
