@@ -277,6 +277,8 @@ Note, here the flags `-o` and `-j` are being used to redirect the output to the 
 ---
 ## :speech_balloon: Citation
 
+If you found the paper and/or this repository useful, please consider citing our work: :blush::+1:
+
 ```bibtex
 @inproceedings{burdisso-etal-2024-reliability,
     title = "Reliability Estimation of News Media Sources: Birds of a Feather Flock Together",
@@ -305,3 +307,9 @@ Note, here the flags `-o` and `-j` are being used to redirect the output to the 
   organization={Springer}
 }
 ```
+
+## :ticket: License
+
+Copyright (c) 2024 [Idiap Research Institute](https://www.idiap.ch/).
+
+Apache-2.0 License.
